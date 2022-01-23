@@ -1,0 +1,12 @@
+build
+dist
+*egg*
+test_relief
+a.out
+.*
+!.gitignore
+test.cpp
+/**/__py*
+data
+!.github
+!src/reliefcpp/__init__.py

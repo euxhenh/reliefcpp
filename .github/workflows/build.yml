@@ -1,0 +1,114 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Test and Upload reliefcpp
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  CIBW_SKIP: "cp36-* pp*"
+
+jobs:
+  build_linux:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04]
+        wheel_arch: [x86_64, i686]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Build wheels
+      uses: joerick/cibuildwheel@main
+      env:
+        CIBW_BUILD: "*-manylinux_${{ matrix.wheel_arch }}"
+
+    - uses: actions/upload-artifact@v2
+      with:
+        path: ./wheelhouse/*.whl
+
+  build_other:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-2019, macOS-10.15]
+        wheel_arch: [x86_64, i686]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip build
+        pip install numpy
+
+    - name: Build wheels
+      uses: joerick/cibuildwheel@main
+
+    - uses: actions/upload-artifact@v2
+      with:
+        path: ./wheelhouse/*.whl
+
+  build_sdist:
+    name: Build sdist
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip build
+          pip install numpy
+
+      - name: Build
+        run: |
+          python -m build
+          python setup.py install
+
+      # - name: Test
+      #   run: |
+      #     python -m unittest -v test/test_relief.py
+
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ./dist/*.tar.gz
+
+  upload_pypi:
+    name: Upload to pypi
+    needs: [build_linux, build_other]
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: artifact
+          path: dist
+
+      - name: Publish package to PyPi
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+
