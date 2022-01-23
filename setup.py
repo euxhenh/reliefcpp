@@ -1,15 +1,16 @@
 from distutils import cmd
 import glob
 import os
-import numpy as np
 
 from setuptools import setup, Command, Extension
 
+import numpy as np
+
 relief_ext = Extension('reliefcpp._c_relief',
-                    sources=glob.glob(os.path.join(
-                        'src', 'reliefcpp', '*.cpp')),
-                    include_dirs=['include', np.get_include()],
-                    extra_compile_args=['-std=c++17', '-O2'])
+                       sources=glob.glob(os.path.join(
+                           'src', 'reliefcpp', '*.cpp')),
+                       include_dirs=['include', np.get_include()],
+                       extra_compile_args=['-std=c++17', '-O2'])
 
 
 class CleanCommand(Command):
@@ -31,7 +32,7 @@ options = {
     'name': 'reliefcpp',
     'description': 'reliefcpp is a package for running the relief feature ranking algorithm.',
     'license': 'MIT',
-    'version': '0.2',
+    'version': '0.3',
     'author': 'Euxhen Hasanaj',
     'author_email': 'ehasanaj@cs.cmu.edu',
     'url': 'https://github.com/ferrocactus/reliefcpp',

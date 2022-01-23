@@ -64,7 +64,7 @@ class ReliefBase:
 
     @property
     def metric(self):
-        return self.metric
+        return self._metric
 
     def fit(self, X, y):
         """

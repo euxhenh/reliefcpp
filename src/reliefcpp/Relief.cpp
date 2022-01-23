@@ -3,7 +3,6 @@
 Datapoint Relief::_process_neighbors(size_t id, const Dataset& X, const vector<size_t>& indices)
 {
     // Average the points given by indices in X
-    size_t n_features = X[0].size();
     size_t n_points = indices.size();
 
     srand(time(NULL));
