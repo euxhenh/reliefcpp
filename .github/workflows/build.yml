@@ -97,7 +97,8 @@ jobs:
 
   upload_pypi:
     name: Upload to pypi
-    needs: [build_linux, build_other]
+    # needs: [build_linux, build_other]
+    needs: [build_sdist]
     runs-on: ubuntu-20.04
 
     steps:
