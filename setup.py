@@ -32,7 +32,7 @@ options = {
     'name': 'reliefcpp',
     'description': 'reliefcpp is a package for running the relief feature ranking algorithm.',
     'license': 'MIT',
-    'version': '0.3',
+    'version': '0.4',
     'author': 'Euxhen Hasanaj',
     'author_email': 'ehasanaj@cs.cmu.edu',
     'url': 'https://github.com/ferrocactus/reliefcpp',
