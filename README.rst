@@ -40,9 +40,11 @@ Installation
 ____________
 Installing this package:
 
-    $ git clone https://github.com/ferrocactus/reliefcpp
-    $ cd reliefcpp
-    $ python setup.py install
+.. code-block:: console
+
+    git clone https://github.com/ferrocactus/reliefcpp
+    cd reliefcpp
+    python setup.py install
 
 Use
 ___
