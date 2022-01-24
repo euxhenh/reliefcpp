@@ -38,9 +38,11 @@ More precisely it implements the following variants
 
 Installation
 ____________
-Install this package via pip
+Installing this package:
 
-    $ pip install reliefcpp
+    $ git clone https://github.com/ferrocactus/reliefcpp
+    $ cd reliefcpp
+    $ python setup.py install
 
 Use
 ___
